@@ -100,7 +100,7 @@
 									<arg value="--module-path"/>
 									<arg value="${java.home}/jmods"/>
 									<arg value="--add-modules"/>
-									<arg value="java.base,java.logging,java.sql,java.xml"/>
+									<arg value="java.base,java.logging,java.sql,java.xml,java.desktop"/>
 									<arg value="--output"/>
 									<arg value="${project.build.directory}/custom-jre"/>
 								</exec>

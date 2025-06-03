@@ -2,11 +2,12 @@
 [Console]::InputEncoding = [text.encoding]::UTF8
 
 # 設定 Java 執行參數與檔案路徑
-$jarPath = ".\sql_generate.jar"
+$jarPath = "./lib/sql_generate.jar"
 $jsonInput = "C:/紀錄文件/資料分析人員/包版資料/20250602/SQL/inputFile.json"
+$jrePath = "./jre/bin/java.exe"
 
 # 使用 JSON 陣列方式執行
-Start-Process -NoNewWindow -FilePath "java" -ArgumentList `
+Start-Process -NoNewWindow -FilePath $jrePath -ArgumentList `
     "-Dfile.encoding=UTF-8", `
     "-jar", `
     $jarPath, `
