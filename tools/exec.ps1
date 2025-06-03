@@ -6,7 +6,11 @@ $jarPath = ".\sql_generate.jar"
 $jsonInput = "C:/紀錄文件/資料分析人員/包版資料/20250602/SQL/inputFile.json"
 
 # 使用 JSON 陣列方式執行
-Start-Process -NoNewWindow -FilePath "java" -ArgumentList "-Dfile.encoding=UTF-8", "-jar", $jarPath, "--inputFile=`"$jsonInput`""
+Start-Process -NoNewWindow -FilePath "java" -ArgumentList `
+    "-Dfile.encoding=UTF-8", `
+    "-jar", `
+    $jarPath, `
+    "--inputFile=`"$jsonInput`""
 
 # 或使用傳統參數方式（取消註解以下區塊以使用）
 <#
@@ -19,15 +23,15 @@ $sqlFileName = "qry_ibe_1.sql"
 $sqlFilePath = "C:\紀錄文件\資料分析人員\包版資料\20250602\SQL"
 
 Start-Process -NoNewWindow -FilePath "java" -ArgumentList `
-??? "-Dfile.encoding=UTF-8", `
-??? "-jar", $jarPath, `
-??? "--serialNum=$serialNum", `
-??? "--filePath=$filePath", `
-??? "--caseNum=$caseNum", `
-??? "--fileName=$fileName", `
-??? "--userName=$userName", `
-??? "--sqlFileName=$sqlFileName", `
-??? "--sqlFilePath=`"$sqlFilePath`""
+	"-Dfile.encoding=UTF-8", `
+	"-jar", $jarPath, `
+	"--serialNum=$serialNum", `
+	"--filePath=$filePath", `
+	"--caseNum=$caseNum", `
+	"--fileName=$fileName", `
+	"--userName=$userName", `
+	"--sqlFileName=$sqlFileName", `
+	"--sqlFilePath=`"$sqlFilePath`""
 #>
 
 
