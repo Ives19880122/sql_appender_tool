@@ -60,6 +60,7 @@
 	<build>
 		<finalName>sql_generate</finalName>
 		<plugins>
+			<!-- 0. 打包JAR -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -79,6 +80,69 @@
 							<goal>compileTests</goal>
 							<goal>removeStubs</goal>
 							<goal>removeTestStubs</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 1. 使用 jlink 建立自訂 JRE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<!-- 建立 custom JRE -->
+					<execution>
+						<id>create-custom-jre</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<exec executable="jlink">
+									<arg value="--module-path"/>
+									<arg value="${java.home}/jmods"/>
+									<arg value="--add-modules"/>
+									<arg value="java.base,java.logging,java.sql,java.xml"/>
+									<arg value="--output"/>
+									<arg value="${project.build.directory}/custom-jre"/>
+								</exec>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<!-- 複製 tools 到 target/tools -->
+					<execution>
+						<id>copy-tools</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<copy todir="${project.build.directory}/tools">
+									<fileset dir="${project.basedir}/tools"/>
+								</copy>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 2. 打包 JAR + tools + JRE 為 ZIP -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/zip.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>

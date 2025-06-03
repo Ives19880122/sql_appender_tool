@@ -1,0 +1,37 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+    <id>dist</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <baseDirectory>tool-dist</baseDirectory>
+
+    <fileSets>
+        <!-- 包含 JAR 檔案 -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>sql_generate.jar</include>
+            </includes>
+            <excludes>
+                <exclude>*.zip</exclude>
+            </excludes>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+
+
+        <!-- 包含 tools 目錄（已複製到 target/tools） -->
+        <fileSet>
+            <directory>${project.build.directory}/tools</directory>
+            <outputDirectory>.</outputDirectory>
+        </fileSet>
+
+        <!-- 包含 custom JRE -->
+        <fileSet>
+            <directory>${project.build.directory}/custom-jre</directory>
+            <outputDirectory>jre</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
