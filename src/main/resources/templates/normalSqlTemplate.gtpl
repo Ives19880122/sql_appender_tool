@@ -6,7 +6,7 @@
 
 set newpage 0;
 set space 0;
-set linesize 500;
+set linesize 4000;
 set pagesize 0;
 set echo off;
 set verify off;
